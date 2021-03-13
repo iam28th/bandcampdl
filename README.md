@@ -24,7 +24,7 @@ python bandcampdl.py https://sequesteredkeep.bandcamp.com/album/wandering-far \
 
 ### Requirements
 
-- Python (written in 3.8.5, probably should work in other versions)
+- Python (written in 3.8.5, probably should work in other versions). Nothing else is requiered.
 
 Currently works only with "album" links, e.g. https://fief.bandcamp.com/album/v
 

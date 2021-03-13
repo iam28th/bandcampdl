@@ -59,12 +59,13 @@ class AlbumParser(HTMLParser):
                 for prop in additionalProperty:
                     if prop['name'] == 'file_mp3-128':
                         mp3_url = prop['value']
-                        track_record = TrackRecord(name + '.mp3', mp3_url)
+                        track_record = TrackRecord(self.artist + ' - ' + name + '.mp3', mp3_url)
                         self.tracklist.append(track_record)
 
 
-def download_tracks(folder, tracklist, n_workers):
+def download_tracks(folder, artist, tracklist, n_workers):
     with futures.ThreadPoolExecutor(n_workers) as executor:
+        
         jobs = {
              executor.submit(request.urlretrieve, track.link, folder + track.name): track.name for track in tracklist
          }
@@ -97,6 +98,6 @@ if __name__ == '__main__':
         
         n_workers = min(10, len(parser.tracklist))
         LOGGER.info(f'Download start ({n_workers} threads)')
-        download_tracks(dirname, parser.tracklist, n_workers) 
+        download_tracks(dirname, parser.artist, parser.tracklist, n_workers) 
     
     print('Download finised. Thank you and come again.')

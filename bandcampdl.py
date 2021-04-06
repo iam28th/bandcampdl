@@ -2,6 +2,7 @@
 
 
 import sys
+import argparse
 import json
 import os 
 import pathlib
@@ -11,7 +12,18 @@ from html.parser import HTMLParser
 from collections import namedtuple
 from concurrent import futures
 
+# parsing command line arguments...
+class MyArgParser(argparse.ArgumentParser):
+    def error(self, message):
+        self.print_help()
+        sys.stderr.write('error: %s\n' % message)
+        sys.exit(1)
 
+parser = MyArgParser(description='A script to download albums from bandcamp')
+
+parser.add_argument('links', metavar='URL', type=str, nargs='*', help='Album links to download') 
+parser.add_argument('-i', '--infile', type=str, help='a file with links separeted by Newline')
+ 
 TrackRecord = namedtuple('Track', 'name link')
 
 logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -73,15 +85,20 @@ def download_tracks(folder, artist, tracklist, n_workers):
         for future in futures.as_completed(jobs):
             LOGGER.info('Downloaded track: ' + jobs[future])
 
-        
+
 if __name__ == '__main__':
 
-    if len(sys.argv) == 1:
-        print('Usage: python bandcampdl <bandcamp-album-url>')
-        print('No URL provided, exiting...')
-        sys.exit()
+    if len(sys.argv) < 2:
+        parser.error('No URLs provided, exiting...')
     
-    for link in sys.argv[1:]:
+    args = parser.parse_args()
+    links = []
+    if args.infile:
+        with open(args.infile, 'r') as f:
+            links.extend([line.strip() for line in f])  
+    links.extend(args.links)
+     
+    for link in links:
         LOGGER.info('Opening url: ' + link)
         with request.urlopen(link) as req:
             parser = AlbumParser()

@@ -4,7 +4,8 @@ Parses Bandcamp HTML to download free 128-kbps MP3 files streaming there. Writte
 
 ### Install:
 ```bash
-git clone https://github.com/iam28th/bandcampdl
+git clone https://github.com/iam28th/bandcampdl 
+# or just download a single raw file...
 ```
 ### Usage examples:
 ```bash
@@ -15,11 +16,15 @@ chmod +x bandcampdl.py
 ./bandcampdl.py https://fief.bandcamp.com/album/v
 ```
 
-Can also download multiple albums:
+Can also pass multiple album links albums:
 ```bash
 python bandcampdl.py https://sequesteredkeep.bandcamp.com/album/wandering-far \
     https://iamdim.bandcamp.com/album/compendium-ii \
     https://erang.bandcamp.com/album/tome-i
+```
+Or a text file containing links separeted with Newline:
+```
+python bandcampdl.py -i urls.txt
 ```
 
 ### Requirements

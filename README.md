@@ -16,7 +16,7 @@ chmod +x bandcampdl.py
 ./bandcampdl.py https://fief.bandcamp.com/album/v
 ```
 
-Can also pass multiple album links albums:
+Can also pass multiple album links:
 ```bash
 python bandcampdl.py https://sequesteredkeep.bandcamp.com/album/wandering-far \
     https://iamdim.bandcamp.com/album/compendium-ii \

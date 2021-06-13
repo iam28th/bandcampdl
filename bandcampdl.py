@@ -12,7 +12,7 @@ from html.parser import HTMLParser
 from collections import namedtuple
 from concurrent import futures
 
-# parsing command line arguments...
+# parsing command line arguments....
 class MyArgParser(argparse.ArgumentParser):
     def error(self, message):
         self.print_help()
